@@ -55,6 +55,7 @@ export const ChatbarSettings = () => {
         <Email email={email} onEmailChange={handleEmailChange} />
       ) : null}
 
+      {!serverSidePluginKeysSet ? <PluginKeys /> : null}
 
       <SettingDialog
         open={isSettingDialogOpen}

@@ -1,4 +1,4 @@
-import { IconCheck, IconKey, IconX } from '@tabler/icons-react';
+import { IconCheck, IconMail, IconX } from '@tabler/icons-react';
 import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 import { useTranslation } from 'next-i18next';
@@ -36,7 +36,7 @@ export const Email: FC<Props> = ({ email, onEmailChange: onEmailChange }) => {
 
   return isChanging ? (
     <div className="duration:200 flex w-full cursor-pointer items-center rounded-md py-3 px-3 transition-colors hover:bg-gray-500/10">
-      <IconKey size={18} />
+      <IconMail size={18} />
 
       <input
         ref={inputRef}
@@ -72,7 +72,7 @@ export const Email: FC<Props> = ({ email, onEmailChange: onEmailChange }) => {
   ) : (
     <SidebarButton
       text={t('User Email')}
-      icon={<IconKey size={18} />}
+      icon={<IconMail size={18} />}
       onClick={() => setIsChanging(true)}
     />
   );
