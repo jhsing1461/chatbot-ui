@@ -9,6 +9,7 @@ import { SettingDialog } from '@/components/Settings/SettingDialog';
 
 import { Import } from '../../Settings/Import';
 import { Key } from '../../Settings/Key';
+import { Email } from '../../Settings/Email';
 import { SidebarButton } from '../../Sidebar/SidebarButton';
 import ChatbarContext from '../Chatbar.context';
 import { ClearConversations } from './ClearConversations';
@@ -21,7 +22,9 @@ export const ChatbarSettings = () => {
   const {
     state: {
       apiKey,
+      email,
       lightMode,
+      serverSideEmailIsSet,
       serverSideApiKeyIsSet,
       serverSidePluginKeysSet,
       conversations,
@@ -34,6 +37,7 @@ export const ChatbarSettings = () => {
     handleImportConversations,
     handleExportData,
     handleApiKeyChange,
+    handleEmailChange,
   } = useContext(ChatbarContext);
 
   return (
@@ -42,25 +46,15 @@ export const ChatbarSettings = () => {
         <ClearConversations onClearConversations={handleClearConversations} />
       ) : null}
 
-      <Import onImport={handleImportConversations} />
-
-      <SidebarButton
-        text={t('Export data')}
-        icon={<IconFileExport size={18} />}
-        onClick={() => handleExportData()}
-      />
-
-      <SidebarButton
-        text={t('Settings')}
-        icon={<IconSettings size={18} />}
-        onClick={() => setIsSettingDialog(true)}
-      />
-
+      
       {!serverSideApiKeyIsSet ? (
         <Key apiKey={apiKey} onApiKeyChange={handleApiKeyChange} />
       ) : null}
 
-      {!serverSidePluginKeysSet ? <PluginKeys /> : null}
+      {!serverSideEmailIsSet ? (
+        <Email email={email} onEmailChange={handleEmailChange} />
+      ) : null}
+
 
       <SettingDialog
         open={isSettingDialogOpen}

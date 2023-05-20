@@ -46,6 +46,15 @@ export const Chatbar = () => {
     dispatch: chatDispatch,
   } = chatBarContextValue;
 
+  const handleEmailChange = useCallback(
+    (email: string) => {
+      homeDispatch({ field: 'email', value: email });
+
+      localStorage.setItem('email', email);
+    },
+    [homeDispatch],
+  );
+
   const handleApiKeyChange = useCallback(
     (apiKey: string) => {
       homeDispatch({ field: 'apiKey', value: apiKey });
@@ -216,6 +225,7 @@ export const Chatbar = () => {
         handleExportData,
         handlePluginKeyChange,
         handleClearPluginKey,
+        handleEmailChange,
         handleApiKeyChange,
       }}
     >

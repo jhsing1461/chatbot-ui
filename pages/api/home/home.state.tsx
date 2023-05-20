@@ -6,6 +6,7 @@ import { PluginKey } from '@/types/plugin';
 import { Prompt } from '@/types/prompt';
 
 export interface HomeInitialState {
+  email: string;
   apiKey: string;
   pluginKeys: PluginKey[];
   loading: boolean;
@@ -25,11 +26,13 @@ export interface HomeInitialState {
   messageError: boolean;
   searchTerm: string;
   defaultModelId: OpenAIModelID | undefined;
+  serverSideEmailIsSet: boolean;
   serverSideApiKeyIsSet: boolean;
   serverSidePluginKeysSet: boolean;
 }
 
 export const initialState: HomeInitialState = {
+  email: '',
   apiKey: '',
   loading: false,
   pluginKeys: [],
@@ -49,6 +52,7 @@ export const initialState: HomeInitialState = {
   messageError: false,
   searchTerm: '',
   defaultModelId: undefined,
+  serverSideEmailIsSet: false,
   serverSideApiKeyIsSet: false,
   serverSidePluginKeysSet: false,
 };
