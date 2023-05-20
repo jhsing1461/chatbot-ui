@@ -42,12 +42,14 @@ import { HomeInitialState, initialState } from './home.state';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
+  serverSideEmailIsSet: boolean;
   serverSideApiKeyIsSet: boolean;
   serverSidePluginKeysSet: boolean;
   defaultModelId: OpenAIModelID;
 }
 
 const Home = ({
+  serverSideEmailIsSet,
   serverSideApiKeyIsSet,
   serverSidePluginKeysSet,
   defaultModelId,
@@ -63,6 +65,7 @@ const Home = ({
 
   const {
     state: {
+      email,
       apiKey,
       lightMode,
       folders,
@@ -236,6 +239,11 @@ const Home = ({
   useEffect(() => {
     defaultModelId &&
       dispatch({ field: 'defaultModelId', value: defaultModelId });
+    serverSideEmailIsSet &&
+    dispatch({
+        field: 'serverSideEmailIsSet',
+        value: serverSideEmailIsSet,
+      });
     serverSideApiKeyIsSet &&
       dispatch({
         field: 'serverSideApiKeyIsSet',
@@ -246,7 +254,7 @@ const Home = ({
         field: 'serverSidePluginKeysSet',
         value: serverSidePluginKeysSet,
       });
-  }, [defaultModelId, serverSideApiKeyIsSet, serverSidePluginKeysSet]);
+  }, [defaultModelId,  serverSideEmailIsSet, serverSideApiKeyIsSet, serverSidePluginKeysSet]);
 
   // ON LOAD --------------------------------------------
 
@@ -257,6 +265,16 @@ const Home = ({
         field: 'lightMode',
         value: settings.theme,
       });
+    }
+
+    const email = localStorage.getItem('email');
+
+    if (serverSideEmailIsSet) {
+      dispatch({ field: 'email', value: '' });
+
+      localStorage.removeItem('email');
+    } else if (email) {
+      dispatch({ field: 'email', value: email });
     }
 
     const apiKey = localStorage.getItem('apiKey');
@@ -343,6 +361,7 @@ const Home = ({
   }, [
     defaultModelId,
     dispatch,
+    serverSideEmailIsSet,
     serverSideApiKeyIsSet,
     serverSidePluginKeysSet,
   ]);
@@ -413,6 +432,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 
   return {
     props: {
+      serverSideEmailIsSet: !!process.env.EMAIL,
       serverSideApiKeyIsSet: !!process.env.OPENAI_API_KEY,
       defaultModelId,
       serverSidePluginKeysSet,
